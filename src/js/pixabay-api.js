@@ -20,8 +20,12 @@ function getImage(inputValue) {
   });
   const url = `${BASE_URL}${END_POINT}?${params}`;
   
-  return fetch(url).then(res => res.json());
-  
+  return fetch(url).then(res => {
+    if(!res.ok){
+        throw new Error(response.status);
+    }
+    return res.json();
+  });
 }
 
 
@@ -30,11 +34,12 @@ formEl.addEventListener('submit', event => {
   const inputValue = event.currentTarget.elements.image.value.trim();
 
   getImage(inputValue).then(data =>{
-    console.log(data)
-    const markup = imageTemplate(data);
-    imgGallery.innerHTML = markup; 
     
-  }) 
+    const markup = imageTemplate(data.hits);
+    if(data.hits.length !== 0){
+    imgGallery.innerHTML = markup; 
+    }
+  })
   .catch(error => {
     iziToast.error({
       color: 'red',
@@ -52,23 +57,23 @@ const imageTemplate = (images) =>{
  return images.map(image => 
     `<ul>
  <li class="gallery-item">
-        <a class="gallery-link" href="${images.largeImageURL}">
+        <a class="gallery-link" href="${image.largeImageURL}">
           <img
             class="gallery-image"
             width="1280"
             height="152"
-            src="${images.webformatURL}"
-            data-source="${images.largeImageURL}"
-            alt="${images.tags}"
+            src="${image.webformatURL}"
+            data-source="${image.largeImageURL}"
+            alt="${image.tags}"
           />
           <ul class="gallery-description">
-          <li><h3>Likes</h3><p>${images.likes}</p>
+          <li><h3>Likes</h3><p>${image.likes}</p>
           </li>
-          <li><h3>Views</h3><p>${images.views}</p>
+          <li><h3>Views</h3><p>${image.views}</p>
             </li>
-            <li><h3>Comments</h3><p>${images.comments}</p>
+            <li><h3>Comments</h3><p>${image.comments}</p>
               </li>
-              <li><h3>Downloads</h3><p>${images.downloads}</p>
+              <li><h3>Downloads</h3><p>${image.downloads}</p>
                 </li>
           </ul>
         </a>

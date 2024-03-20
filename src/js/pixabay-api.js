@@ -28,7 +28,9 @@ function getImage(inputValue) {
 formEl.addEventListener('submit', event => {
   event.preventDefault();
   const inputValue = event.currentTarget.elements.image.value.trim();
+
   getImage(inputValue).then(data =>{
+    console.log(data)
     const markup = imageTemplate(data);
     imgGallery.innerHTML = markup; 
     

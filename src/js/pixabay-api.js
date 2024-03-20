@@ -5,7 +5,7 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const formEl = document.querySelector('.form');
-const imgGallery = document.querySelector(`.images-gallery`)
+const imgGallery = document.querySelector(`.gallery`)
 
 
 function getImage(inputValue) {
@@ -55,7 +55,7 @@ formEl.addEventListener('submit', event => {
 
 const imageTemplate = (images) =>{
  return images.map(image => 
-    `<ul>
+    `
  <li class="gallery-item">
         <a class="gallery-link" href="${image.largeImageURL}">
           <img
@@ -77,8 +77,7 @@ const imageTemplate = (images) =>{
                 </li>
           </ul>
         </a>
-      </li>
-      </ul>`
+      </li>`
  )
     .join('');
 }

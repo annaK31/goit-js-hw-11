@@ -5,7 +5,6 @@
   |============================
 */
 @import url('./reset.css');
-@import url('./vite-promo.css');
 @import url('./header.css');
 
 :root {
@@ -22,4 +21,49 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+.container {
+  max-width: 1160px;
+  padding: 0 16px;
+  margin: auto;
+}
+.form {
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 24px;
+  text-align: center;
+}
+
+.input-form {
+  border-radius: 4px;
+  border-width: 1px;
+  width: 272px;
+  height: 40px;
+  padding: 8px;
+  margin-right: 8px;
+}
+.input-form::placeholder {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #808080;
+}
+.input-form:placeholder-shown {
+  outline: none;
+}
+.btn-submit {
+  border-radius: 8px;
+  padding: 8px 16px;
+  min-width: 91px;
+  height: 40px;
+  background: #4e75ff;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #fff;
 }

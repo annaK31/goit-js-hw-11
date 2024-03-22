@@ -5,8 +5,7 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const formEl = document.querySelector('.form');
-const imgGallery = document.querySelector(`.gallery`)
-
+const imgGallery = document.querySelector(`.gallery`);
 
 function getImage(inputValue) {
   const BASE_URL = 'https://pixabay.com';
@@ -32,12 +31,15 @@ function getImage(inputValue) {
 formEl.addEventListener('submit', event => {
   event.preventDefault();
   const inputValue = event.currentTarget.elements.image.value.trim();
-
+  
   getImage(inputValue).then(data =>{
     
     const markup = imageTemplate(data.hits);
-    if(data.hits.length !== 0){
-    imgGallery.innerHTML = markup; 
+    
+     imgGallery.innerHTML = markup; 
+      
+    if(data.hits.length === 0){
+   return error;
     }
   })
   .catch(error => {
@@ -46,6 +48,11 @@ formEl.addEventListener('submit', event => {
       position: 'center',
       message: "Sorry, there are no images matching your search query. Please try again!",
     })
+      })
+.finally(() => {
+
+ return formEl.reset()
+  
 })
 });
  
@@ -53,10 +60,9 @@ formEl.addEventListener('submit', event => {
 
 
 
-const imageTemplate = (images) =>{
+const imageTemplate = (images) => {
  return images.map(image => 
-    `
- <li class="gallery-item">
+    `<li class="gallery-item">
         <a class="gallery-link" href="${image.largeImageURL}">
           <img
             class="gallery-image"
@@ -66,6 +72,7 @@ const imageTemplate = (images) =>{
             data-source="${image.largeImageURL}"
             alt="${image.tags}"
           />
+          </a>
           <ul class="gallery-description">
           <li><h3>Likes</h3><p>${image.likes}</p>
           </li>
@@ -76,22 +83,26 @@ const imageTemplate = (images) =>{
               <li><h3>Downloads</h3><p>${image.downloads}</p>
                 </li>
           </ul>
-        </a>
-      </li>`
- )
-    .join('');
-}
+        </li>`
+).join('');
+
+ }
+ const galleryCfg = {
+  captionsData: 'alt',
+};
+let lightbox = new SimpleLightbox('.gallery a', galleryCfg);
+lightbox.on('show.simplelightbox', function () {});
+lightbox.refresh();
 
 
 
 
-const lightbox = new SimpleLightbox('.gallery a', {
-    captionsData: 'alt',
-    captionDelay: 250,
-    refresh(){
 
-    }
-},);
+
+
+
+
+
       
     
 
